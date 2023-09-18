@@ -50,5 +50,14 @@ func (c *Controller) Check() Status {
 	c.wg.Wait() // if Status is not Pause, it will return immediately
 	c.locker.RLock()
 	defer c.locker.RUnlock()
-	return c.s
+	tmp := c.s
+	return tmp
+}
+
+// Get return status immediately; no blocking.
+func (c *Controller) Get() Status {
+	c.locker.RLock()
+	defer c.locker.RUnlock()
+	tmp := c.s
+	return tmp
 }
